@@ -46,8 +46,8 @@ export default function LoginPage() {
       <Card className="w-full max-w-md shadow-lg">
         <div className="p-8">
           <div className="mb-8 text-center">
-            <div className="w-12 h-12 rounded-lg bg-primary flex items-center justify-center mx-auto mb-4">
-              <span className="text-xl font-bold text-primary-foreground">SNHS</span>
+            <div className="w-35 h-35 flex items-center justify-center mx-auto mb-4">
+              <img src='/santorlogo.png' alt=''></img>
             </div>
             <h1 className="text-2xl font-bold text-foreground">Santor National Highschool</h1>
             <p className="text-muted-foreground text-sm mt-2">
