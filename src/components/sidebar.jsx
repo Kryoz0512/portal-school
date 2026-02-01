@@ -28,7 +28,7 @@ export function Sidebar({ items, role, onClose, isOpen = true }) {
     <aside
       className={`
         fixed left-0 top-0 h-screen w-64 bg-sidebar text-sidebar-foreground shadow-lg
-        transition-transform duration-300 ease-in-out z-30
+        transition-transform duration-300 ease-in-out z-40
         md:translate-x-0 md:relative
         ${isOpen ? 'translate-x-0' : '-translate-x-full'}
       `}

@@ -1,7 +1,7 @@
 'use client'
 
 import React, { useState } from 'react'
-import { LayoutDashboard, Users } from 'lucide-react'
+import { FileText, LayoutDashboard, Users } from 'lucide-react'
 import { usePathname } from 'next/navigation'
 import { AdminSidebar } from '@/components/admin-sidebar'
 import { Header } from '@/components/header'
@@ -11,6 +11,7 @@ export default function AdminLayout({ children }) {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
   const [expandedMenus, setExpandedMenus] = useState({
     Enrollment: pathname?.startsWith('/admin/enrollment') || false,
+    Admission: pathname?.startsWith('/admin/admission') || false,
   })
 
   const handleToggleMenu = (label) => {
@@ -41,6 +42,18 @@ export default function AdminLayout({ children }) {
         { label: 'Students Not Enrolled', href: '/admin/enrollment/not-enrolled-students' },
         { label: 'Enrollment List', href: '/admin/enrollment/enrollment-list' },
         { label: 'Student Schedule', href: '/admin/enrollment/student-schedule' },
+      ],
+    },
+    {
+      label:'Admission',
+      href:'#',
+      icon:<FileText size={20}/>,
+      onClick: () => handleToggleMenu('Admission'),
+      submenu: [
+        { label: 'Registration', href: '/admin/admission/registration' },
+        { label: 'Accreditation', href: '/admin/admission/accreditation' },
+        { label: 'Upload or Delete Picture', href: '/admin/admission/upload-or-delete-picture' },
+        { label: 'View Edit Student Information', href: '/admin/admission/view-edit-student-information' },
       ],
     },
   ]

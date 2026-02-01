@@ -13,6 +13,7 @@ export function DataTable({
   onPrint,
   rowsPerPage = 10,
   showActions = true,
+  keyField = 'id',
 }) {
   const [currentPage, setCurrentPage] = useState(1)
   const totalPages = Math.ceil(data.length / rowsPerPage)
@@ -47,10 +48,10 @@ export function DataTable({
           </TableHeader>
           <TableBody>
             {currentData.length > 0 ? (
-              currentData.map((row, idx) => (
-                <TableRow key={idx} className="hover:bg-muted/50 transition-colors">
+              currentData.map((row) => (
+                <TableRow key={row[keyField]} className="hover:bg-muted/50 transition-colors">
                   {columns.map((column) => (
-                    <TableCell key={column.key} className="py-3">
+                    <TableCell key={`${row[keyField]}-${column.key}`} className="py-3">
                       {column.render ? column.render(row[column.key], row) : row[column.key]}
                     </TableCell>
                   ))}

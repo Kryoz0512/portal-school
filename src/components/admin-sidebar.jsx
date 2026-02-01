@@ -36,7 +36,7 @@ export function AdminSidebar({
     <aside
       className={`
         fixed left-0 top-0 h-screen w-64 bg-sidebar text-sidebar-foreground shadow-lg
-        transition-transform duration-300 ease-in-out z-30
+        transition-transform duration-300 ease-in-out z-50
         md:translate-x-0 md:relative
         ${isOpen ? 'translate-x-0' : '-translate-x-full'}
       `}
@@ -54,7 +54,7 @@ export function AdminSidebar({
 
         <nav className="space-y-1">
           {items.map((item) => (
-            <div key={item.href}>
+            <div key={item.label}>
               <button
                 onClick={() => handleItemClick(item, item.label)}
                 className={`w-full flex items-center gap-3 px-4 py-2.5 rounded-lg font-medium text-sm transition-all cursor-pointer ${
