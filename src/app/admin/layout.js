@@ -1,7 +1,7 @@
 'use client'
 
 import React, { useState } from 'react'
-import { FileText, LayoutDashboard, Users } from 'lucide-react'
+import { Book, FileText, LayoutDashboard, Users } from 'lucide-react'
 import { usePathname } from 'next/navigation'
 import { AdminSidebar } from '@/components/admin-sidebar'
 import { Header } from '@/components/header'
@@ -12,6 +12,7 @@ export default function AdminLayout({ children }) {
   const [expandedMenus, setExpandedMenus] = useState({
     Enrollment: pathname?.startsWith('/admin/enrollment') || false,
     Admission: pathname?.startsWith('/admin/admission') || false,
+    Registrar: pathname?.startsWith('/admin/registrar') || false,
   })
 
   const handleToggleMenu = (label) => {
@@ -56,6 +57,15 @@ export default function AdminLayout({ children }) {
         { label: 'View Edit Student Information', href: '/admin/admission/view-edit-student-information' },
       ],
     },
+    {
+      label: 'Registrar',
+      href:'#',
+      icon:<Book size={20}/>,
+      onClick: () => handleToggleMenu('Registrar'),
+      submenu: [
+        { label: 'Subject Listings', href: '/admin/registrar/subject-listings'}
+      ]
+    }
   ]
 
   const getPageTitle = () => {

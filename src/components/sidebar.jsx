@@ -29,11 +29,11 @@ export function Sidebar({ items, role, onClose, isOpen = true }) {
       className={`
         fixed left-0 top-0 h-screen w-64 bg-sidebar text-sidebar-foreground shadow-lg
         transition-transform duration-300 ease-in-out z-40
-        md:translate-x-0 md:relative
+        md:translate-x-0 md:relative flex flex-col
         ${isOpen ? 'translate-x-0' : '-translate-x-full'}
       `}
     >
-      <div className="p-6 border-b border-sidebar-border md:border-0">
+      <div className="p-6 border-b border-sidebar-border md:border-0 flex-shrink-0">
         <div className="flex items-center gap-3 mb-8">
           <div className="w-10 h-10 rounded-lg bg-sidebar-primary flex items-center justify-center">
             <span className="font-bold text-sidebar-primary-foreground text-sm">SNHS</span>
@@ -46,7 +46,7 @@ export function Sidebar({ items, role, onClose, isOpen = true }) {
           </div>
         </div>
 
-        <nav className="space-y-1">
+        <nav className="space-y-1 overflow-y-auto flex-1 pr-2">
           {items.map((item) => (
             <div key={item.href}>
               <button
@@ -83,7 +83,7 @@ export function Sidebar({ items, role, onClose, isOpen = true }) {
         </nav>
       </div>
 
-      <div className="absolute bottom-0 left-0 right-0 p-6 border-t border-sidebar-border bg-sidebar">
+      <div className="p-6 border-t border-sidebar-border bg-sidebar flex-shrink-0">
         <Button
           onClick={handleLogout}
           variant="ghost"
