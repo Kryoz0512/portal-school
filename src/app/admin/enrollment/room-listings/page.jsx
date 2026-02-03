@@ -1,13 +1,15 @@
 'use client'
 
 import { Card } from '@/components/ui/card'
+import { Button } from '@/components/ui/button'
 import { DataTable } from '@/components/data-table'
 import { Input } from '@/components/ui/input'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
 import { Badge } from '@/components/ui/badge'
+import { AddRoomModal } from '@/components/add-room-modal'
 import { useState } from 'react'
 
-const roomsData = [
+const initialRoomsData = [
   { id: 1, room: '101', capacity: 45, status: 'Active' },
   { id: 2, room: '102', capacity: 45, status: 'Active' },
   { id: 3, room: '103', capacity: 50, status: 'Active' },
@@ -15,9 +17,12 @@ const roomsData = [
 ]
 
 export default function RoomListingsPage() {
+  const [roomsData, setRoomsData] = useState(initialRoomsData)
   const [searchRoom, setSearchRoom] = useState('')
   const [capacity, setCapacity] = useState('all')
   const [status, setStatus] = useState('all')
+  const [isModalOpen, setIsModalOpen] = useState(false)
+  const [editingRoom, setEditingRoom] = useState(null)
 
   const columns = [
     { key: 'room', label: 'Room Number' },
@@ -32,6 +37,40 @@ export default function RoomListingsPage() {
       ),
     },
   ]
+
+  const handleAddRoom = (formData) => {
+    if (editingRoom) {
+      // Update existing room
+      setRoomsData((prev) =>
+        prev.map((room) =>
+          room.id === editingRoom.id ? { ...room, ...formData } : room
+        )
+      )
+      setEditingRoom(null)
+    } else {
+      // Add new room
+      const newRoom = {
+        id: Math.max(...roomsData.map((r) => r.id), 0) + 1,
+        ...formData,
+      }
+      setRoomsData((prev) => [...prev, newRoom])
+    }
+    setIsModalOpen(false)
+  }
+
+  const handleEditRoom = (room) => {
+    setEditingRoom(room)
+    setIsModalOpen(true)
+  }
+
+  const handleDeleteRoom = (room) => {
+    setRoomsData((prev) => prev.filter((r) => r.id !== room.id))
+  }
+
+  const handleOpenModal = () => {
+    setEditingRoom(null)
+    setIsModalOpen(true)
+  }
 
   const filteredData = roomsData.filter((room) => {
     const searchMatch =
@@ -109,14 +148,30 @@ export default function RoomListingsPage() {
       </Card>
 
       <Card className="p-6">
+        <div className="flex justify-between items-center mb-6">
+          <h3 className="font-semibold text-foreground">Rooms</h3>
+          <Button onClick={handleOpenModal} className="gap-2">
+            + Add Room
+          </Button>
+        </div>
         <DataTable
           columns={columns}
           data={filteredData}
-          onEdit={(row) => console.log('Edit:', row)}
-          onDelete={(row) => console.log('Delete:', row)}
+          onEdit={handleEditRoom}
+          onDelete={handleDeleteRoom}
           showActions={true}
         />
       </Card>
+
+      <AddRoomModal
+        isOpen={isModalOpen}
+        onClose={() => {
+          setIsModalOpen(false)
+          setEditingRoom(null)
+        }}
+        onSubmit={handleAddRoom}
+        initialData={editingRoom}
+      />
     </div>
   )
 }

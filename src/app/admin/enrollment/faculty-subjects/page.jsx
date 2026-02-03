@@ -1,9 +1,11 @@
 'use client'
 
-import { Card } from '@/components/ui/card'
 import { DataTable } from '@/components/data-table'
 import { Button } from '@/components/ui/button'
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
+import { PageHeader } from '@/components/page-header'
+import { FilterCard } from '@/components/filter-card'
+import { DataCard } from '@/components/data-card'
+import { FormField } from '@/components/form-field'
 import { useState } from 'react'
 
 const subjectsData = [
@@ -34,58 +36,41 @@ export default function FacultySubjectsPage() {
 
   return (
     <div className="space-y-6">
-      <div>
-        <h2 className="text-3xl font-bold text-foreground">Faculty & Subjects</h2>
-        <p className="text-muted-foreground mt-1">Manage subject catalog</p>
-      </div>
+      <PageHeader
+        title="Faculty & Subjects"
+        description="Manage subject catalog"
+      />
 
-      <Card className="p-6">
-        <h3 className="font-semibold text-foreground mb-4">Filters</h3>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <div>
-            <label className="block text-sm font-medium text-foreground mb-2">
-              Grade Level
-            </label>
-            <Select value={gradeLevel} onValueChange={setGradeLevel}>
-              <SelectTrigger>
-                <SelectValue />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="all">All Grades</SelectItem>
-                <SelectItem value="Grade 9">Grade 9</SelectItem>
-                <SelectItem value="Grade 10">Grade 10</SelectItem>
-              </SelectContent>
-            </Select>
-          </div>
+      <FilterCard>
+        <FormField
+          label="Grade Level"
+          value={gradeLevel}
+          onSelectChange={setGradeLevel}
+          options={[
+            { value: 'all', label: 'All Grades' },
+            { value: 'Grade 9', label: 'Grade 9' },
+            { value: 'Grade 10', label: 'Grade 10' },
+          ]}
+        />
+        <FormField
+          label="Subject Name"
+          value={subjectName}
+          onSelectChange={setSubjectName}
+          options={[
+            { value: 'all', label: 'All Subjects' },
+            { value: 'English', label: 'English' },
+            { value: 'Mathematics', label: 'Mathematics' },
+            { value: 'Science', label: 'Science' },
+          ]}
+        />
+      </FilterCard>
 
-          <div>
-            <label className="block text-sm font-medium text-foreground mb-2">
-              Subject Name
-            </label>
-            <Select value={subjectName} onValueChange={setSubjectName}>
-              <SelectTrigger>
-                <SelectValue />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="all">All Subjects</SelectItem>
-                <SelectItem value="English">English</SelectItem>
-                <SelectItem value="Mathematics">Mathematics</SelectItem>
-                <SelectItem value="Science">Science</SelectItem>
-              </SelectContent>
-            </Select>
-          </div>
-        </div>
-      </Card>
-
-      <Card className="p-6">
-        <div className="flex justify-between items-center mb-4">
-          <h3 className="font-semibold text-foreground">Subjects List</h3>
-          <Button className="bg-primary text-primary-foreground" size="sm">
-            Print Results
-          </Button>
-        </div>
+      <DataCard
+        title="Subjects List"
+        action={<Button className="bg-primary text-primary-foreground" size="sm">Print Results</Button>}
+      >
         <DataTable columns={columns} data={filteredData} showActions={false} />
-      </Card>
+      </DataCard>
     </div>
   )
 }

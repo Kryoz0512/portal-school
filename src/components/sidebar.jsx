@@ -33,7 +33,8 @@ export function Sidebar({ items, role, onClose, isOpen = true }) {
         ${isOpen ? 'translate-x-0' : '-translate-x-full'}
       `}
     >
-      <div className="p-6 border-b border-sidebar-border md:border-0 flex-shrink-0">
+      {/* Header */}
+      <div className="shrink-0 p-6 border-b border-sidebar-border md:border-0">
         <div className="flex items-center gap-3 mb-8">
           <div className="w-10 h-10 rounded-lg bg-sidebar-primary flex items-center justify-center">
             <span className="font-bold text-sidebar-primary-foreground text-sm">SNHS</span>
@@ -45,8 +46,10 @@ export function Sidebar({ items, role, onClose, isOpen = true }) {
             </p>
           </div>
         </div>
+      </div>
 
-        <nav className="space-y-1 overflow-y-auto flex-1 pr-2">
+      {/* Scrollable Nav */}
+      <nav className="flex-1 overflow-y-auto px-6 py-4 space-y-1">
           {items.map((item) => (
             <div key={item.href}>
               <button
@@ -54,7 +57,7 @@ export function Sidebar({ items, role, onClose, isOpen = true }) {
                 className={`w-full flex items-center gap-3 px-4 py-2.5 rounded-lg font-medium text-sm transition-all cursor-pointer ${
                   pathname === item.href
                     ? 'bg-sidebar-primary text-sidebar-primary-foreground shadow-md'
-                    : 'hover:bg-sidebar-primary text-sidebar-foreground'
+                    : 'hover:bg-sidebar-accent/10 text-sidebar-foreground'
                 }`}
               >
                 {item.icon && <span className="w-5 h-5">{item.icon}</span>}
@@ -80,10 +83,10 @@ export function Sidebar({ items, role, onClose, isOpen = true }) {
               )}
             </div>
           ))}
-        </nav>
-      </div>
+      </nav>
 
-      <div className="p-6 border-t border-sidebar-border bg-sidebar flex-shrink-0">
+      {/* Logout Button */}
+      <div className="shrink-0 p-6 border-t border-sidebar-border bg-sidebar">
         <Button
           onClick={handleLogout}
           variant="ghost"

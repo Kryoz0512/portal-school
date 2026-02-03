@@ -1,9 +1,9 @@
 'use client'
 
-import { Card } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
-import { Input } from '@/components/ui/input'
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
+import { PageHeader } from '@/components/page-header'
+import { FormCard } from '@/components/form-card'
+import { FormField } from '@/components/form-field'
 import { useState } from 'react'
 
 export default function RegistrationPage() {
@@ -26,153 +26,115 @@ export default function RegistrationPage() {
     }))
   }
 
-  const handleSelectChange = (name, value) => {
+  const handleSelectChange = (fieldName, value) => {
     setFormData((prev) => ({
       ...prev,
-      [name]: value,
+      [fieldName]: value,
     }))
   }
 
   const handleSubmit = (e) => {
     e.preventDefault()
     console.log('Form submitted:', formData)
-    // Form submission logic here
   }
 
   return (
     <div className="space-y-6">
-      <div>
-        <h2 className="text-3xl font-bold text-foreground">Student Registration</h2>
-        <p className="text-muted-foreground mt-1">Register new students with their information</p>
-      </div>
+      <PageHeader
+        title="Student Registration"
+        description="Register new students with their information"
+      />
 
-      <Card className="p-6">
-        <form onSubmit={handleSubmit} className="space-y-6">
-          {/* Row 1: Student Status and LRN */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div>
-              <label className="block text-sm font-medium text-foreground mb-2">
-                Student Status
-              </label>
-              <Select value={formData.studentStatus} onValueChange={(value) => handleSelectChange('studentStatus', value)}>
-                <SelectTrigger>
-                  <SelectValue placeholder="Select student status" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="new">New</SelectItem>
-                  <SelectItem value="transferee">Transferee</SelectItem>
-                </SelectContent>
-              </Select>
-            </div>
-            <div>
-              <label className="block text-sm font-medium text-foreground mb-2">
-                Student LRN
-              </label>
-              <Input
-                type="text"
-                name="lrn"
-                placeholder="Enter student LRN"
-                value={formData.lrn}
-                onChange={handleInputChange}
-              />
-            </div>
-          </div>
+      <FormCard title="Register Student" onSubmit={handleSubmit}>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <FormField
+            label="Student Status"
+            value={formData.studentStatus}
+            onSelectChange={(value) => handleSelectChange('studentStatus', value)}
+            placeholder="Select student status"
+            options={[
+              { value: 'new', label: 'New' },
+              { value: 'transferee', label: 'Transferee' },
+            ]}
+            required
+          />
+          <FormField
+            label="Student LRN"
+            name="lrn"
+            placeholder="Enter student LRN"
+            value={formData.lrn}
+            onChange={handleInputChange}
+            required
+          />
+        </div>
 
-          {/* Row 2: School Year and Gender */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div>
-              <label className="block text-sm font-medium text-foreground mb-2">
-                School Year
-              </label>
-              <Input
-                type="text"
-                name="schoolYear"
-                placeholder="e.g. SY 2025–2026"
-                value={formData.schoolYear}
-                onChange={handleInputChange}
-              />
-            </div>
-            <div>
-              <label className="block text-sm font-medium text-foreground mb-2">
-                Gender
-              </label>
-              <Select value={formData.gender} onValueChange={(value) => handleSelectChange('gender', value)}>
-                <SelectTrigger>
-                  <SelectValue placeholder="Select gender" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="male">Male</SelectItem>
-                  <SelectItem value="female">Female</SelectItem>
-                  <SelectItem value="other">Other</SelectItem>
-                </SelectContent>
-              </Select>
-            </div>
-          </div>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <FormField
+            label="School Year"
+            name="schoolYear"
+            placeholder="e.g. SY 2025–2026"
+            value={formData.schoolYear}
+            onChange={handleInputChange}
+            required
+          />
+          <FormField
+            label="Gender"
+            value={formData.gender}
+            onSelectChange={(value) => handleSelectChange('gender', value)}
+            placeholder="Select gender"
+            options={[
+              { value: 'male', label: 'Male' },
+              { value: 'female', label: 'Female' },
+              { value: 'other', label: 'Other' },
+            ]}
+            required
+          />
+        </div>
 
-          {/* Row 3: Date of Birth */}
-          <div>
-            <label className="block text-sm font-medium text-foreground mb-2">
-              Date of Birth
-            </label>
-            <Input
-              type="date"
-              name="dateOfBirth"
-              value={formData.dateOfBirth}
-              onChange={handleInputChange}
-            />
-          </div>
+        <FormField
+          label="Date of Birth"
+          name="dateOfBirth"
+          type="date"
+          value={formData.dateOfBirth}
+          onChange={handleInputChange}
+          required
+        />
 
-          {/* Row 4: Name Fields */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-            <div>
-              <label className="block text-sm font-medium text-foreground mb-2">
-                Last Name
-              </label>
-              <Input
-                type="text"
-                name="lastName"
-                placeholder="Enter last name"
-                value={formData.lastName}
-                onChange={handleInputChange}
-              />
-            </div>
-            <div>
-              <label className="block text-sm font-medium text-foreground mb-2">
-                First Name
-              </label>
-              <Input
-                type="text"
-                name="firstName"
-                placeholder="Enter first name"
-                value={formData.firstName}
-                onChange={handleInputChange}
-              />
-            </div>
-            <div>
-              <label className="block text-sm font-medium text-foreground mb-2">
-                Middle Name
-              </label>
-              <Input
-                type="text"
-                name="middleName"
-                placeholder="Enter middle name"
-                value={formData.middleName}
-                onChange={handleInputChange}
-              />
-            </div>
-          </div>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+          <FormField
+            label="Last Name"
+            name="lastName"
+            placeholder="Enter last name"
+            value={formData.lastName}
+            onChange={handleInputChange}
+            required
+          />
+          <FormField
+            label="First Name"
+            name="firstName"
+            placeholder="Enter first name"
+            value={formData.firstName}
+            onChange={handleInputChange}
+            required
+          />
+          <FormField
+            label="Middle Name"
+            name="middleName"
+            placeholder="Enter middle name"
+            value={formData.middleName}
+            onChange={handleInputChange}
+          />
+        </div>
 
-          {/* Action Buttons */}
-          <div className="flex gap-3 pt-4">
-            <Button variant="outline" type="button">
-              Cancel
-            </Button>
-            <Button type="submit" className="bg-primary text-primary-foreground">
-              Save / Submit
-            </Button>
-          </div>
-        </form>
-      </Card>
+        <div className="flex gap-3 pt-4">
+          <Button variant="outline" type="button">
+            Cancel
+          </Button>
+          <Button type="submit" className="bg-primary text-primary-foreground">
+            Save / Submit
+          </Button>
+        </div>
+      </FormCard>
     </div>
   )
 }

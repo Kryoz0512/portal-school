@@ -43,7 +43,7 @@ export function AdminSidebar({
       `}
     >
       {/* Header */}
-      <div className="flex-shrink-0 p-6 border-b border-sidebar-border md:border-0">
+      <div className="shrink-0 p-6 border-b border-sidebar-border md:border-0">
         <div className="flex items-center gap-3 mb-8">
           <div className="w-10 h-10 rounded-lg bg-sidebar-primary flex items-center justify-center">
             <span className="font-bold text-sidebar-primary-foreground text-sm">SNHS</span>
@@ -72,7 +72,7 @@ export function AdminSidebar({
               {item.submenu && item.submenu.length > 0 && (
                 <ChevronRight
                   size={16}
-                  className={`transition-transform flex-shrink-0 ${
+                  className={`transition-transform shrink-0 ${
                     expandedMenus[item.label] ? 'rotate-90' : ''
                   }`}
                 />
@@ -104,7 +104,7 @@ export function AdminSidebar({
       </nav>
 
       {/* Logout Button */}
-      <div className="flex-shrink-0 p-6 border-t border-sidebar-border bg-sidebar">
+      <div className="shrink-0 p-6 border-t border-sidebar-border bg-sidebar">
         <Button
           onClick={handleLogout}
           variant="ghost"

@@ -1,11 +1,13 @@
 'use client'
 
-import { Card } from '@/components/ui/card'
 import { DataTable } from '@/components/data-table'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog'
+import { PageHeader } from '@/components/page-header'
+import { DataCard } from '@/components/data-card'
+import { FormField } from '@/components/form-field'
 import { useState } from 'react'
 
 const sectionsData = [
@@ -26,6 +28,21 @@ export default function ClassSectionsPage() {
     { key: 'sectionName', label: 'Section Name' },
     { key: 'gradeLevel', label: 'Grade Level' },
   ]
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target
+    setFormData((prev) => ({
+      ...prev,
+      [name]: value,
+    }))
+  }
+
+  const handleSelectChange = (value) => {
+    setFormData((prev) => ({
+      ...prev,
+      gradeLevel: value,
+    }))
+  }
 
   const handleAddSection = () => {
     if (formData.sectionName && formData.gradeLevel) {
@@ -48,75 +65,60 @@ export default function ClassSectionsPage() {
 
   return (
     <div className="space-y-6">
-      <div className="flex justify-between items-center">
-        <div>
-          <h2 className="text-3xl font-bold text-foreground">Class Sections</h2>
-          <p className="text-muted-foreground mt-1">Create and manage class sections</p>
-        </div>
-
-        <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
-          <DialogTrigger asChild>
-            <Button className="bg-primary text-primary-foreground">+ Create Section</Button>
-          </DialogTrigger>
-          <DialogContent>
-            <DialogHeader>
-              <DialogTitle>Create New Section</DialogTitle>
-            </DialogHeader>
-            <div className="space-y-4">
-              <div>
-                <label className="block text-sm font-medium text-foreground mb-2">
-                  Section Name
-                </label>
-                <Input
+      <PageHeader
+        title="Class Sections"
+        description="Create and manage class sections"
+        action={
+          <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
+            <DialogTrigger asChild>
+              <Button className="bg-primary text-primary-foreground">+ Create Section</Button>
+            </DialogTrigger>
+            <DialogContent>
+              <DialogHeader>
+                <DialogTitle>Create New Section</DialogTitle>
+              </DialogHeader>
+              <div className="space-y-4">
+                <FormField
+                  label="Section Name"
+                  name="sectionName"
                   placeholder="e.g., Grade 10 - Section A"
                   value={formData.sectionName}
-                  onChange={(e) =>
-                    setFormData({ ...formData, sectionName: e.target.value })
-                  }
-                  className="bg-background"
+                  onChange={handleInputChange}
+                  required
                 />
-              </div>
-              <div>
-                <label className="block text-sm font-medium text-foreground mb-2">
-                  Grade Level (Optional)
-                </label>
-                <Select
+                <FormField
+                  label="Grade Level"
                   value={formData.gradeLevel}
-                  onValueChange={(value) =>
-                    setFormData({ ...formData, gradeLevel: value })
-                  }
-                >
-                  <SelectTrigger>
-                    <SelectValue placeholder="Select grade level" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="7">Grade 7</SelectItem>
-                    <SelectItem value="8">Grade 8</SelectItem>
-                    <SelectItem value="9">Grade 9</SelectItem>
-                    <SelectItem value="10">Grade 10</SelectItem>
-                  </SelectContent>
-                </Select>
+                  onSelectChange={handleSelectChange}
+                  placeholder="Select grade level"
+                  options={[
+                    { value: '7', label: 'Grade 7' },
+                    { value: '8', label: 'Grade 8' },
+                    { value: '9', label: 'Grade 9' },
+                    { value: '10', label: 'Grade 10' },
+                  ]}
+                />
+                <div className="flex gap-2 justify-end pt-4">
+                  <Button
+                    variant="outline"
+                    onClick={() => setDialogOpen(false)}
+                  >
+                    Cancel
+                  </Button>
+                  <Button
+                    onClick={handleAddSection}
+                    className="bg-primary text-primary-foreground"
+                  >
+                    Confirm
+                  </Button>
+                </div>
               </div>
-              <div className="flex gap-2 justify-end pt-4">
-                <Button
-                  variant="outline"
-                  onClick={() => setDialogOpen(false)}
-                >
-                  Cancel
-                </Button>
-                <Button
-                  onClick={handleAddSection}
-                  className="bg-primary text-primary-foreground"
-                >
-                  Confirm
-                </Button>
-              </div>
-            </div>
-          </DialogContent>
-        </Dialog>
-      </div>
+            </DialogContent>
+          </Dialog>
+        }
+      />
 
-      <Card className="p-6">
+      <DataCard title="Sections">
         <DataTable
           columns={columns}
           data={sections}
@@ -124,7 +126,7 @@ export default function ClassSectionsPage() {
           onDelete={handleDeleteSection}
           showActions={true}
         />
-      </Card>
+      </DataCard>
     </div>
   )
 }

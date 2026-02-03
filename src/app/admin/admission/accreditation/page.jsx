@@ -1,10 +1,11 @@
 'use client'
 
-import { Card } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
-import { Input } from '@/components/ui/input'
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
 import { DataTable } from '@/components/data-table'
+import { PageHeader } from '@/components/page-header'
+import { FormCard } from '@/components/form-card'
+import { DataCard } from '@/components/data-card'
+import { FormField } from '@/components/form-field'
 import { useState } from 'react'
 
 const accreditationData = [
@@ -41,10 +42,10 @@ export default function AccreditationPage() {
     }))
   }
 
-  const handleSelectChange = (name, value) => {
+  const handleSelectChange = (value) => {
     setFormData((prev) => ({
       ...prev,
-      [name]: value,
+      schoolType: value,
     }))
   }
 
@@ -74,85 +75,64 @@ export default function AccreditationPage() {
 
   return (
     <div className="space-y-6">
-      <div>
-        <h2 className="text-3xl font-bold text-foreground">School Accreditation</h2>
-        <p className="text-muted-foreground mt-1">Manage school accreditation information</p>
-      </div>
+      <PageHeader
+        title="School Accreditation"
+        description="Manage school accreditation information"
+      />
 
-      {/* Form Card */}
-      <Card className="p-6">
-        <h3 className="text-lg font-semibold text-foreground mb-4">Add School</h3>
-        <form onSubmit={handleAddSchool} className="space-y-4">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div>
-              <label className="block text-sm font-medium text-foreground mb-2">
-                School Code
-              </label>
-              <Input
-                type="text"
-                name="schoolCode"
-                placeholder="Enter school code"
-                value={formData.schoolCode}
-                onChange={handleInputChange}
-              />
-            </div>
-            <div>
-              <label className="block text-sm font-medium text-foreground mb-2">
-                School Name
-              </label>
-              <Input
-                type="text"
-                name="schoolName"
-                placeholder="Enter school name"
-                value={formData.schoolName}
-                onChange={handleInputChange}
-              />
-            </div>
-          </div>
+      <FormCard title="Add School" onSubmit={handleAddSchool}>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <FormField
+            label="School Code"
+            name="schoolCode"
+            placeholder="Enter school code"
+            value={formData.schoolCode}
+            onChange={handleInputChange}
+            required
+          />
+          <FormField
+            label="School Name"
+            name="schoolName"
+            placeholder="Enter school name"
+            value={formData.schoolName}
+            onChange={handleInputChange}
+            required
+          />
+        </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div>
-              <label className="block text-sm font-medium text-foreground mb-2">
-                School Type
-              </label>
-              <Select value={formData.schoolType} onValueChange={(value) => handleSelectChange('schoolType', value)}>
-                <SelectTrigger>
-                  <SelectValue placeholder="Select school type" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="Public">Public</SelectItem>
-                  <SelectItem value="Private">Private</SelectItem>
-                  <SelectItem value="Charter">Charter</SelectItem>
-                </SelectContent>
-              </Select>
-            </div>
-            <div>
-              <label className="block text-sm font-medium text-foreground mb-2">
-                School Address
-              </label>
-              <Input
-                type="text"
-                name="schoolAddress"
-                placeholder="Enter school address"
-                value={formData.schoolAddress}
-                onChange={handleInputChange}
-              />
-            </div>
-          </div>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <FormField
+            label="School Type"
+            value={formData.schoolType}
+            onSelectChange={handleSelectChange}
+            placeholder="Select school type"
+            options={[
+              { value: 'Public', label: 'Public' },
+              { value: 'Private', label: 'Private' },
+              { value: 'Charter', label: 'Charter' },
+            ]}
+            required
+          />
+          <FormField
+            label="School Address"
+            name="schoolAddress"
+            placeholder="Enter school address"
+            value={formData.schoolAddress}
+            onChange={handleInputChange}
+            required
+          />
+        </div>
 
-          <div className="flex justify-end pt-2">
-            <Button type="submit" className="bg-primary text-primary-foreground">
-              Add
-            </Button>
-          </div>
-        </form>
-      </Card>
+        <div className="flex justify-end pt-2">
+          <Button type="submit" className="bg-primary text-primary-foreground">
+            Add
+          </Button>
+        </div>
+      </FormCard>
 
-      {/* Table Card */}
-      <Card className="p-6">
-        <h3 className="text-lg font-semibold text-foreground mb-4">Accredited Schools</h3>
+      <DataCard title="Accredited Schools">
         <DataTable columns={columns} data={schools} showActions={false} />
-      </Card>
+      </DataCard>
     </div>
   )
 }
