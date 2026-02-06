@@ -65,7 +65,7 @@ export default function TeacherDashboard() {
         ))}
       </div>
 
-      <Card className="p-6 bg-gradient-to-br from-primary/5 to-secondary/5">
+      <Card className="p-6 bg-linear-to-br from-primary/5 to-secondary/5">
         <h3 className="font-semibold text-foreground mb-3">
           Quick Access
         </h3>
