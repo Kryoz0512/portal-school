@@ -86,7 +86,7 @@ export function Sidebar({ items, role, onClose, isOpen = true }) {
       </nav>
 
       {/* Logout Button */}
-      <div className="shrink-0 p-6 border-t border-sidebar-border bg-sidebar">
+      <div className="shrink-0 p-6 bg-sidebar">
         <Button
           onClick={handleLogout}
           variant="ghost"

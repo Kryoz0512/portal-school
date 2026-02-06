@@ -42,15 +42,15 @@ export default function LoginPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-background via-background to-secondary/10 flex items-center justify-center p-4">
+    <div className="min-h-screen bg-green-700 flex items-center justify-center p-4">
       <Card className="w-full max-w-md shadow-lg">
         <div className="p-8">
           <div className="mb-8 text-center">
             <div className="w-35 h-35 flex items-center justify-center mx-auto mb-4">
               <img src='/santorlogo.png' alt=''></img>
             </div>
-            <h1 className="text-2xl font-bold text-foreground">Santor National Highschool</h1>
-            <p className="text-muted-foreground text-sm mt-2">
+            <h1 className="text-2xl font-bold text-green-700">Santor National Highschool</h1>
+            <p className="text-black text-sm mt-2">
               Sign in to your account
             </p>
           </div>
@@ -68,8 +68,8 @@ export default function LoginPage() {
                     onClick={() => setSelectedRole(role)}
                     className={`py-2 px-3 rounded-lg font-medium text-sm transition-all ${
                       selectedRole === role
-                        ? 'bg-primary text-primary-foreground shadow-md'
-                        : 'bg-muted text-muted-foreground hover:bg-muted/80'
+                        ? 'bg-green-900 text-primary-foreground shadow-md'
+                        : 'bg-green-700 text-white hover:bg-green-800'
                     }`}
                   >
                     {role.charAt(0).toUpperCase() + role.slice(1)}
@@ -117,7 +117,7 @@ export default function LoginPage() {
             <Button
               type="submit"
               disabled={loading}
-              className="w-full bg-primary hover:bg-primary/90 text-primary-foreground font-medium mt-6"
+              className="w-full bg-green-700 hover:bg-green-900 text-primary-foreground font-medium mt-6"
             >
               {loading ? 'Signing in...' : 'Sign In'}
             </Button>
