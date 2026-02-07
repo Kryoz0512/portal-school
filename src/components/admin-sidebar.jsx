@@ -45,12 +45,12 @@ export function AdminSidebar({
       {/* Header */}
       <div className="shrink-0 p-6 border-b border-sidebar-border md:border-0">
         <div className="flex items-center gap-3 mb-8">
-          <div className="w-10 h-10 rounded-lg bg-sidebar-primary flex items-center justify-center">
+          {/* <div className="w-10 h-10 rounded-lg bg-sidebar-primary flex items-center justify-center">
             <span className="font-bold text-sidebar-primary-foreground text-sm">SNHS</span>
-          </div>
+          </div> */}
           <div>
             <h1 className="font-bold text-lg">Santor National HighSchool</h1>
-            <p className="text-xs text-white">Admin</p>
+            {/* <p className="text-xs text-white">Admin</p> */}
           </div>
         </div>
       </div>

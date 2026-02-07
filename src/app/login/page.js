@@ -5,6 +5,8 @@ import { useRouter } from 'next/navigation'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Card } from '@/components/ui/card'
+import { Alert } from '@/components/ui/alert'
+import { setAuthUser } from '@/lib/auth-utils'
 
 export default function LoginPage() {
   const router = useRouter()
@@ -12,19 +14,39 @@ export default function LoginPage() {
   const [password, setPassword] = useState('')
   const [selectedRole, setSelectedRole] = useState('student')
   const [loading, setLoading] = useState(false)
+  const [error, setError] = useState('')
 
-  const handleLogin = (e) => {
+  const handleLogin = async (e) => {
     e.preventDefault()
+    setError('')
     setLoading(true)
 
-    // Simulate login delay
-    setTimeout(() => {
-      // Store role in sessionStorage for routing
-      sessionStorage.setItem('userRole', selectedRole)
-      sessionStorage.setItem('userEmail', email)
+    try {
+      const response = await fetch('/api/auth/login', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          email,
+          password,
+          role: selectedRole,
+        }),
+      })
 
-      // Route based on role
-      switch (selectedRole) {
+      const data = await response.json()
+
+      if (!response.ok) {
+        setError(data.error || 'Login failed')
+        setLoading(false)
+        return
+      }
+
+      // Store user in sessionStorage
+      setAuthUser(data.user)
+
+      // Route based on actual user role (returned from API)
+      switch (data.user.role) {
         case 'student':
           router.push('/student/dashboard')
           break
@@ -37,8 +59,10 @@ export default function LoginPage() {
         default:
           break
       }
+    } catch (err) {
+      setError('An error occurred during login')
       setLoading(false)
-    }, 600)
+    }
   }
 
   return (
@@ -60,19 +84,22 @@ export default function LoginPage() {
               <label className="text-sm font-medium text-foreground">
                 Select Your Role
               </label>
-              <div className="grid grid-cols-3 gap-2">
-                {['student', 'teacher', 'admin'].map((role) => (
+              <div className="grid grid-cols-2 gap-2">
+                {[
+                  { value: 'student', label: 'Student' },
+                  { value: 'faculty_and_staff', label: 'Faculty and Staff' },
+                ].map((role) => (
                   <button
-                    key={role}
+                    key={role.value}
                     type="button"
-                    onClick={() => setSelectedRole(role)}
+                    onClick={() => setSelectedRole(role.value)}
                     className={`py-2 px-3 rounded-lg font-medium text-sm transition-all ${
-                      selectedRole === role
+                      selectedRole === role.value
                         ? 'bg-green-900 text-primary-foreground shadow-md'
                         : 'bg-green-700 text-white hover:bg-green-800'
                     }`}
                   >
-                    {role.charAt(0).toUpperCase() + role.slice(1)}
+                    {role.label}
                   </button>
                 ))}
               </div>
@@ -123,10 +150,20 @@ export default function LoginPage() {
             </Button>
           </form>
 
-          <div className="mt-6 p-3 bg-secondary/10 rounded-lg">
-            <p className="text-xs text-muted-foreground text-center">
-              Demo credentials: Use any email and password. Role selection determines your dashboard.
-            </p>
+          {error && (
+            <Alert className="mt-4 bg-red-50 border border-red-200 text-red-700">
+              {error}
+            </Alert>
+          )}
+
+          <div className="mt-6 p-3 bg-blue-50 rounded-lg border border-blue-200">
+            <p className="text-xs font-semibold text-blue-900 mb-2">Test Credentials:</p>
+            <div className="text-xs text-blue-800 space-y-1">
+              <p><strong>Student:</strong> student@school.edu / student123</p>
+              <p><strong>Faculty & Staff:</strong></p>
+              <p className="ml-2">Teacher: teacher@school.edu / teacher123</p>
+              <p className="ml-2">Admin: admin@school.edu / admin123</p>
+            </div>
           </div>
         </div>
       </Card>
