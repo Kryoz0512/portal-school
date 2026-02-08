@@ -126,28 +126,12 @@
   }
 }
 
-/* Sidebar scrollbar styling */
+/* Sidebar scrollbar - hidden but scrollable */
 nav:has([role="button"]) {
-  scrollbar-width: thin;
-  scrollbar-color: var(--sidebar-primary) transparent;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
 }
 
 nav:has([role="button"])::-webkit-scrollbar {
-  width: 8px;
-}
-
-nav:has([role="button"])::-webkit-scrollbar-track {
-  background: transparent;
-}
-
-nav:has([role="button"])::-webkit-scrollbar-thumb {
-  background-color: var(--sidebar-primary);
-  border-radius: 4px;
-  border: 2px solid transparent;
-  background-clip: content-box;
-}
-
-nav:has([role="button"])::-webkit-scrollbar-thumb:hover {
-  background-color: var(--sidebar-accent);
-  background-clip: content-box;
+  display: none;
 }

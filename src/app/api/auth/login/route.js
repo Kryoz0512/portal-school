@@ -34,7 +34,8 @@ export async function POST(request) {
       success: true,
       user: {
         ...user,
-        token: `token_${user.id}_${Date.now()}`, // Simple token for demonstration
+        // token sample lang
+        token: `token_${user.id}_${Date.now()}`,
       },
     })
   } catch (error) {

@@ -9,6 +9,7 @@ import { useState } from 'react'
 export default function RegistrationPage() {
   const [formData, setFormData] = useState({
     studentStatus: '',
+    gradeLevel: '',
     lrn: '',
     schoolYear: '',
     gender: '',
@@ -55,9 +56,28 @@ export default function RegistrationPage() {
             options={[
               { value: 'new', label: 'New' },
               { value: 'transferee', label: 'Transferee' },
+              { value: 'current', label: 'Current' },
             ]}
             required
           />
+          {(formData.studentStatus === 'current' || formData.studentStatus === 'transferee') && (
+            <FormField
+              label="Grade Level"
+              value={formData.gradeLevel}
+              onSelectChange={(value) => handleSelectChange('gradeLevel', value)}
+              placeholder="Select grade level"
+              options={[
+                { value: 'grade7', label: 'Grade 7' },
+                { value: 'grade8', label: 'Grade 8' },
+                { value: 'grade9', label: 'Grade 9' },
+                { value: 'grade10', label: 'Grade 10' },
+              ]}
+              required
+            />
+          )}
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <FormField
             label="Student LRN"
             name="lrn"
@@ -66,9 +86,6 @@ export default function RegistrationPage() {
             onChange={handleInputChange}
             required
           />
-        </div>
-
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <FormField
             label="School Year"
             name="schoolYear"
@@ -77,6 +94,9 @@ export default function RegistrationPage() {
             onChange={handleInputChange}
             required
           />
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <FormField
             label="Gender"
             value={formData.gender}
