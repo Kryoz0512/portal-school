@@ -151,7 +151,7 @@ export default function LoginPage() {
           </form>
 
           {error && (
-            <Alert className="mt-4 bg-red-50 border border-red-200 text-red-700">
+            <Alert className="flex mt-4 bg-red-50 border border-red-200 text-red-700">
               {error}
             </Alert>
           )}
