@@ -2,11 +2,21 @@
 
 import { Card } from '@/components/ui/card'
 import { DataTable } from '@/components/data-table'
+import {
+  Table,
+  TableBody,
+  TableCaption,
+  TableCell,
+  TableFooter,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table"
 
 const scheduleData = [
   {
     id: 1,
-    day: 'Monday',
+    day: 'MTF',
     time: '8:00 AM - 9:00 AM',
     subject: 'English',
     section: 'Section A',
@@ -14,46 +24,47 @@ const scheduleData = [
   },
   {
     id: 2,
-    day: 'Monday',
-    time: '9:15 AM - 10:15 AM',
-    subject: 'English',
+    day: 'TTh',
+    time: '9:30 AM - 11:00 AM',
+    subject: 'Mathematics',
     section: 'Section B',
-    room: 'Room 102',
+    room: 'Room 204',
   },
   {
     id: 3,
-    day: 'Monday',
-    time: '10:30 AM - 11:00 AM',
-    subject: 'Break Time',
-    section: '-',
-    room: '-',
+    day: 'MWF',
+    time: '1:00 PM - 2:00 PM',
+    subject: 'Science',
+    section: 'Section A',
+    room: 'Lab 1',
   },
   {
     id: 4,
-    day: 'Tuesday',
-    time: '8:00 AM - 9:00 AM',
-    subject: 'English',
+    day: 'Wed',
+    time: '2:00 PM - 4:00 PM',
+    subject: 'Physical Education',
     section: 'Section C',
-    room: 'Room 103',
+    room: 'Gymnasium',
   },
   {
     id: 5,
-    day: 'Wednesday',
-    time: '1:00 PM - 2:00 PM',
-    subject: 'English',
+    day: 'MTF',
+    time: '10:00 AM - 11:00 AM',
+    subject: 'History',
     section: 'Section A',
-    room: 'Room 101',
+    room: 'Room 105',
+  },
+  {
+    id: 6,
+    day: 'TTh',
+    time: '1:00 PM - 2:30 PM',
+    subject: 'Computer Science',
+    section: 'Section B',
+    room: 'Computer Lab 2',
   },
 ]
 
 export default function TeacherSchedulePage() {
-  const columns = [
-    { key: 'day', label: 'Day' },
-    { key: 'time', label: 'Time' },
-    { key: 'subject', label: 'Subject' },
-    { key: 'section', label: 'Section' },
-    { key: 'room', label: 'Room' },
-  ]
 
   return (
     <div className="space-y-6">
@@ -67,11 +78,32 @@ export default function TeacherSchedulePage() {
       </div>
 
       <Card className="p-6">
-        <DataTable
-          columns={columns}
-          data={scheduleData}
-          showActions={false}
-        />
+        <div className="overflow-x-auto">
+        <Table className="w-full border-collapse">
+          <TableHeader className="bg-(--table-head)">
+            <TableRow>
+            <TableHead className="px-4 py-3 text-white">Subject</TableHead>
+            <TableHead className="px-4 py-3 text-white">Schedule</TableHead>
+            <TableHead className="px-4 py-3 text-white">Room & Sections</TableHead>
+            </TableRow>
+          </TableHeader>
+          <TableBody>
+            {scheduleData.map((item) => (
+              <TableRow key={item.id}>
+                <TableCell className="px-4 py-3 text-foreground border border-border">
+                  {item.subject}
+                </TableCell>
+                <TableCell className="px-4 py-3 text-foreground border border-border">
+                  {item.day} - {item.time}
+                </TableCell>
+                <TableCell className="px-4 py-3 text-foreground border border-border">
+                  {item.section}/{item.room}
+                </TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+        </div>
       </Card>
     </div>
   )

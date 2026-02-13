@@ -1,6 +1,16 @@
 'use client'
 
 import { Card } from '@/components/ui/card'
+import {
+  Table,
+  TableBody,
+  TableCaption,
+  TableCell,
+  TableFooter,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table"
 
 const schedule = [
   {
@@ -41,71 +51,36 @@ export default function StudentSchedulePage() {
 
       <Card className="p-6">
         <div className="overflow-x-auto">
-          <table className="w-full border-collapse">
-            <thead>
-              <tr>
-                <th className="px-4 py-3 text-left font-semibold text-foreground border border-border bg-muted">
+          <Table className="w-full border-collapse">
+            <TableHeader className="bg-(--table-head)">
+              <TableRow>
+                <TableHead className="px-4 py-3 text-white">
                   Subject
-                </th>
-                <th className="px-4 py-3 text-left font-semibold text-foreground border border-border bg-muted">
+                </TableHead>
+                <TableHead className="px-4 py-3 text-white">
                   Schedule
-                </th>
-                <th className="px-4 py-3 text-left font-semibold text-foreground border border-border bg-muted">
+                </TableHead>
+                <TableHead className="px-4 py-3 text-white">
                   Sections & Room
-                </th>
-                {/* {days.map((day) => (
-                  <th
-                    key={day}
-                    className="px-4 py-3 text-left font-semibold text-foreground border border-border bg-muted text-center"
-                  >
-                    {day}
-                  </th>
-                ))} */}
-              </tr>
-            </thead>
-            <tbody>
+                </TableHead>
+              </TableRow>
+            </TableHeader>
+            <TableBody>
               {schedule.map((item) => (
-                <tr key={item.id}>
-                  <td className="px-4 py-3 text-foreground border border-border">
+                <TableRow key={item.id}>
+                  <TableCell className="px-4 py-3 text-foreground border border-border">
                     {item.subject}
-                  </td>
-                  <td className="px-4 py-3 text-foreground border border-border">
+                  </TableCell>
+                  <TableCell className="px-4 py-3 text-foreground border border-border">
                     {item.day} - {item.time}
-                  </td>
-                  <td className="px-4 py-3 text-foreground border border-border">
+                  </TableCell>
+                  <TableCell className="px-4 py-3 text-foreground border border-border">
                     {item.room}
-                  </td>
-                </tr>
+                  </TableCell>
+                </TableRow>
               ))}
-              {/* {times.map((time) => (
-                <tr key={time}>
-                  <td className="px-4 py-3 text-foreground border border-border font-medium bg-muted">
-                    {time}
-                  </td>
-                  {days.map((day) => {
-                    const scheduleItem = schedule.find((s) => s.time === time && s.day === day)
-                    return (
-                      <td
-                        key={`${day}-${time}`}
-                        className="px-4 py-3 text-foreground border border-border"
-                      >
-                        {scheduleItem ? (
-                          <div>
-                            <p className="font-medium">{scheduleItem.subject}</p>
-                            <p className="text-sm text-muted-foreground">
-                              {scheduleItem.room}
-                            </p>
-                          </div>
-                        ) : (
-                          <span className="text-muted-foreground">-</span>
-                        )}
-                      </td>
-                    )
-                  })}
-                </tr>
-              ))} */}
-            </tbody>
-          </table>
+            </TableBody>
+          </Table>
         </div>
       </Card>
     </div>
