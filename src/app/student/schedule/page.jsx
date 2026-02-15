@@ -33,7 +33,42 @@ const schedule = [
     time: '10:30 AM - 11:30 AM',
     subject: 'Science',
     room: 'Lab 201',
-  }
+  },
+  {
+    id: 4,
+    day: 'MTWF',
+    time: '1:00 PM - 2:00 PM',
+    subject: 'History',
+    room: 'Room 305',
+  },
+  {
+    id: 5,
+    day: 'MTHF',
+    time: '2:15 PM - 3:15 PM',
+    subject: 'Computer Science',
+    room: 'IT Lab 1',
+  },
+  {
+    id: 6,
+    day: 'TTHF',
+    time: '8:00 AM - 9:30 AM',
+    subject: 'Art Appreciation',
+    room: 'Studio A',
+  },
+  {
+    id: 7,
+    day: 'MTF',
+    time: '11:00 AM - 12:00 PM',
+    subject: 'Physical Education',
+    room: 'Gymnasium',
+  },
+  {
+    id: 8,
+    day: 'WTHF',
+    time: '3:30 PM - 4:30 PM',
+    subject: 'Social Studies',
+    room: 'Room 202',
+  },
 ]
 
 export default function StudentSchedulePage() {
@@ -61,7 +96,7 @@ export default function StudentSchedulePage() {
                   Schedule
                 </TableHead>
                 <TableHead className="px-4 py-3 text-white">
-                  Sections & Room
+                    Room
                 </TableHead>
               </TableRow>
             </TableHeader>
@@ -72,7 +107,8 @@ export default function StudentSchedulePage() {
                     {item.subject}
                   </TableCell>
                   <TableCell className="px-4 py-3 text-foreground border border-border">
-                    {item.day} - {item.time}
+                     {item.day}<br/>
+                     {item.time}
                   </TableCell>
                   <TableCell className="px-4 py-3 text-foreground border border-border">
                     {item.room}

@@ -1,7 +1,7 @@
 'use client'
 
 import React, { useState } from 'react'
-import { Book, FileText, LayoutDashboard, Users } from 'lucide-react'
+import { Book, FileText, LayoutDashboard, Users, NotebookPen } from 'lucide-react'
 import { usePathname } from 'next/navigation'
 import { AdminSidebar } from '@/components/admin-sidebar'
 import { Header } from '@/components/header'
@@ -31,7 +31,7 @@ export default function AdminLayout({ children }) {
     {
       label: 'Enrollment',
       href: '#',
-      icon: <Users size={20} />,
+      icon: <NotebookPen size={20} />,
       onClick: () => handleToggleMenu('Enrollment'),
       submenu: [
         { label: 'Room Schedule', href: '/admin/enrollment/room-schedule' },
@@ -64,6 +64,16 @@ export default function AdminLayout({ children }) {
       onClick: () => handleToggleMenu('Registrar'),
       submenu: [
         { label: 'Subject Listings', href: '/admin/registrar/subject-listings'}
+      ]
+    },
+    {
+      label: 'User Management',
+      href:'#',
+      icon:<Users size={20}/>,
+      onClick: () => handleToggleMenu('User Management'),
+      submenu: [
+        {label:'Admin', href:'/admin/user-management/create-admin'},
+        {label:'Teacher', href:'/admin/user-management/create-teacher'},
       ]
     }
   ]

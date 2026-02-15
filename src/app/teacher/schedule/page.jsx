@@ -94,7 +94,8 @@ export default function TeacherSchedulePage() {
                   {item.subject}
                 </TableCell>
                 <TableCell className="px-4 py-3 text-foreground border border-border">
-                  {item.day} - {item.time}
+                    {item.day}<br/>
+                     {item.time}
                 </TableCell>
                 <TableCell className="px-4 py-3 text-foreground border border-border">
                   {item.section}/{item.room}
