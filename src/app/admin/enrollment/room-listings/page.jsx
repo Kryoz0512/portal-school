@@ -90,11 +90,16 @@ export default function RoomListingsPage() {
 
   return (
     <div className="space-y-6">
-      <div>
-        <h2 className="text-3xl font-bold text-foreground">Room Listings</h2>
-        <p className="text-muted-foreground mt-1">
-          Search and filter available rooms
-        </p>
+      <div className="flex justify-between items-center">
+        <div>
+          <h2 className="text-3xl font-bold text-foreground">Room Listings</h2>
+          <p className="text-muted-foreground mt-1">
+            Search and filter available rooms
+          </p>
+        </div>
+        <Button onClick={handleOpenModal} className="gap-2">
+          + Add Room
+        </Button>
       </div>
 
       <Card className="p-6">
@@ -150,9 +155,6 @@ export default function RoomListingsPage() {
       <Card className="p-6">
         <div className="flex justify-between items-center mb-6">
           <h3 className="font-semibold text-foreground">Rooms</h3>
-          <Button onClick={handleOpenModal} className="gap-2">
-            + Add Room
-          </Button>
         </div>
         <DataTable
           columns={columns}
