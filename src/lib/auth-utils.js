@@ -1,4 +1,4 @@
-// Auth utility functions for client-side use
+// auth utility functions for client-side use
 
 export const getAuthUser = () => {
   if (typeof window === 'undefined') return null

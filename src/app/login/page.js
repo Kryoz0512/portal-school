@@ -12,7 +12,6 @@ export default function LoginPage() {
   const router = useRouter()
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
-  const [selectedRole, setSelectedRole] = useState('student')
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState('')
 
@@ -30,7 +29,6 @@ export default function LoginPage() {
         body: JSON.stringify({
           email,
           password,
-          role: selectedRole,
         }),
       })
 
@@ -80,31 +78,6 @@ export default function LoginPage() {
           </div>
 
           <form onSubmit={handleLogin} className="space-y-4">
-            <div className="space-y-3">
-              <label className="text-sm font-medium text-foreground">
-                Select Your Role
-              </label>
-              <div className="grid grid-cols-2 gap-2">
-                {[
-                  { value: 'student', label: 'Student' },
-                  { value: 'faculty_and_staff', label: 'Faculty and Staff' },
-                ].map((role) => (
-                  <button
-                    key={role.value}
-                    type="button"
-                    onClick={() => setSelectedRole(role.value)}
-                    className={`py-2 px-3 rounded-lg font-medium text-sm transition-all ${
-                      selectedRole === role.value
-                        ? 'bg-green-900 text-primary-foreground shadow-md'
-                        : 'bg-green-700 text-white hover:bg-green-800'
-                    }`}
-                  >
-                    {role.label}
-                  </button>
-                ))}
-              </div>
-            </div>
-
             <div>
               <label
                 htmlFor="email"

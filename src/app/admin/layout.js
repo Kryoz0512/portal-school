@@ -1,7 +1,7 @@
 'use client'
 
 import React, { useState } from 'react'
-import { Book, FileText, LayoutDashboard, Users, NotebookPen } from 'lucide-react'
+import { Book, FileText, LayoutDashboard, Users, NotebookPen, Archive, User } from 'lucide-react'
 import { usePathname } from 'next/navigation'
 import { AdminSidebar } from '@/components/admin-sidebar'
 import { Header } from '@/components/header'
@@ -13,6 +13,7 @@ export default function AdminLayout({ children }) {
     Enrollment: pathname?.startsWith('/admin/enrollment') || false,
     Admission: pathname?.startsWith('/admin/admission') || false,
     Registrar: pathname?.startsWith('/admin/registrar') || false,
+    Records: pathname?.startsWith('/admin/records') || false,
   })
 
   const handleToggleMenu = (label) => {
@@ -67,6 +68,16 @@ export default function AdminLayout({ children }) {
       ]
     },
     {
+      label: 'Records',
+      href:'#',
+      icon:<Archive size={20}/>,
+      onClick: () => handleToggleMenu('Records'),
+      submenu: [
+        { label: 'Final Reports', href: '/admin/records/final-reports'},
+        { label: 'Transcript of Records (TOR)', href: '/admin/records/transcript-of-records'},
+      ]
+    },
+    {
       label: 'User Management',
       href:'#',
       icon:<Users size={20}/>,
@@ -75,11 +86,22 @@ export default function AdminLayout({ children }) {
         {label:'Admin', href:'/admin/user-management/create-admin'},
         {label:'Teacher', href:'/admin/user-management/create-teacher'},
       ]
-    }
+    },
+    {
+      label: 'Documents',
+      href: '/admin/documents',
+      icon: <FileText size={20} />,
+    },
+    {
+      label: 'Profile',
+      href: '/admin/profile',
+      icon: <User size={20} />,
+    },
   ]
 
   const getPageTitle = () => {
     if (pathname === '/admin/dashboard') return 'Admin Dashboard'
+    if (pathname === '/admin/profile') return 'Profile Settings'
     const allItems = sidebarItems.flatMap((item) => item.submenu || [])
     const currentPage = allItems.find((item) => item.href === pathname)
     return currentPage?.label || 'Admin'
@@ -116,3 +138,4 @@ export default function AdminLayout({ children }) {
     </div>
   )
 }
+

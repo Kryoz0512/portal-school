@@ -66,7 +66,7 @@ export const validateCredentials = (email, password, role) => {
   const user = findUserByEmail(email, role)
   if (!user) return null
   if (user.password !== password) return null
-  // Don't return the password
+  // don't return the password
   const { password: _, ...userWithoutPassword } = user
   return userWithoutPassword
 }

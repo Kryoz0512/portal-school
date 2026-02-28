@@ -3,25 +3,20 @@ import { validateCredentials } from '@/lib/auth-credentials'
 export async function POST(request) {
   try {
     const body = await request.json()
-    let { email, password, role } = body
+    const { email, password } = body
 
-    if (!email || !password || !role) {
+    if (!email || !password) {
       return Response.json(
         { error: 'Missing required fields' },
         { status: 400 }
       )
     }
 
-    let user = null
-
-    if (role === 'faculty_and_staff') {
-      user = validateCredentials(email, password, 'teacher')
-      if (!user) {
-        user = validateCredentials(email, password, 'admin')
-      }
-    } else {
-      user = validateCredentials(email, password, role)
-    }
+    // try each role automatically
+    let user =
+      validateCredentials(email, password, 'student') ||
+      validateCredentials(email, password, 'teacher') ||
+      validateCredentials(email, password, 'admin')
 
     if (!user) {
       return Response.json(
@@ -34,14 +29,10 @@ export async function POST(request) {
       success: true,
       user: {
         ...user,
-        // token sample lang
         token: `token_${user.id}_${Date.now()}`,
       },
     })
   } catch (error) {
-    return Response.json(
-      { error: 'Internal server error' },
-      { status: 500 }
-    )
+    return Response.json({ error: 'Internal server error' }, { status: 500 })
   }
 }

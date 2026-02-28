@@ -1,26 +1,26 @@
 'use client'
 
+import React, { useState } from 'react'
+import { PageHeader } from '@/components/page-header'
 import { Card } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
-import { useState } from 'react'
-import { Avatar, AvatarImage, AvatarFallback } from '@/components/ui/avatar'
-import { PageHeader } from '@/components/page-header'
 import { AlertCircle, CheckCircle2, Eye, EyeOff } from 'lucide-react'
 
-export default function StudentProfilePage() {
-  // Initial student data
-  const initialFormData = {
-    firstName: 'Maria',
-    lastName: 'Santos',
-    email: 'maria.santos@school.edu',
-    phone: '+63 912 345 6789',
-    dateOfBirth: '2009-05-15',
-    address: '123 Main St, Metro Manila, PH',
+export default function TeacherProfileSettingsPage() {
+  // Initial teacher data
+  const initialTeacher = {
+    firstName: 'Mary',
+    lastName: 'Smith',
+    email: 'maryjane.smith@snhs.edu.ph',
+    phone: '(555) 123-4567',
+    room: 'Room 204',
+    officeHours: 'Monday to Friday, 2:00 PM - 4:00 PM',
   }
 
-  const [formData, setFormData] = useState(initialFormData)
+  // Form state
+  const [formData, setFormData] = useState(initialTeacher)
   const [passwordData, setPasswordData] = useState({
     currentPassword: '',
     newPassword: '',
@@ -36,7 +36,7 @@ export default function StudentProfilePage() {
   const [isChangingPassword, setIsChangingPassword] = useState(false)
 
   // Check if form has changes
-  const hasFormChanges = JSON.stringify(formData) !== JSON.stringify(initialFormData)
+  const hasFormChanges = JSON.stringify(formData) !== JSON.stringify(initialTeacher)
 
   // Check if password fields are filled
   const isPasswordFieldsFilled =
@@ -45,7 +45,7 @@ export default function StudentProfilePage() {
     passwordData.confirmPassword
 
   // Handle form input change
-  const handleInputChange = (field, value) => {
+  const handleFormChange = (field, value) => {
     setFormData(prev => ({ ...prev, [field]: value }))
   }
 
@@ -63,6 +63,7 @@ export default function StudentProfilePage() {
   const handleSaveChanges = async () => {
     setIsSaving(true)
     try {
+      // Simulate API call
       await new Promise(resolve => setTimeout(resolve, 1000))
       setMessage({
         type: 'success',
@@ -103,6 +104,7 @@ export default function StudentProfilePage() {
 
     setIsChangingPassword(true)
     try {
+      // Simulate API call
       await new Promise(resolve => setTimeout(resolve, 1000))
       setPasswordData({
         currentPassword: '',
@@ -128,7 +130,7 @@ export default function StudentProfilePage() {
     <div className="space-y-6">
       <PageHeader
         title="Profile Settings"
-        description="Manage your personal information and password"
+        description="Update your profile information and change your password"
       />
 
       {/* Messages */}
@@ -149,22 +151,6 @@ export default function StudentProfilePage() {
         </div>
       )}
 
-      {/* Profile Picture Section */}
-      <Card className="p-6 bg-gradient-to-r from-blue-50 to-purple-50 border-blue-200">
-        <h3 className="font-semibold text-foreground mb-4">Profile Picture</h3>
-        <div className="flex items-center gap-6">
-          <Avatar className="w-24 h-24">
-            <AvatarImage src="https://avatar.vercel.sh/student" alt={`${formData.firstName} ${formData.lastName}`} />
-            <AvatarFallback className="bg-blue-600 text-white text-2xl">
-              {formData.firstName[0]}{formData.lastName[0]}
-            </AvatarFallback>
-          </Avatar>
-          <Button variant="outline" className="border-blue-300 text-blue-600 hover:bg-blue-50">
-            Upload New Picture
-          </Button>
-        </div>
-      </Card>
-
       {/* Personal Information */}
       <Card className="p-6">
         <h2 className="text-xl font-semibold text-gray-900 mb-6">Personal Information</h2>
@@ -177,7 +163,7 @@ export default function StudentProfilePage() {
               <Input
                 id="firstName"
                 value={formData.firstName}
-                onChange={e => handleInputChange('firstName', e.target.value)}
+                onChange={e => handleFormChange('firstName', e.target.value)}
                 className="mt-2"
               />
             </div>
@@ -188,13 +174,13 @@ export default function StudentProfilePage() {
               <Input
                 id="lastName"
                 value={formData.lastName}
-                onChange={e => handleInputChange('lastName', e.target.value)}
+                onChange={e => handleFormChange('lastName', e.target.value)}
                 className="mt-2"
               />
             </div>
             <div>
               <Label htmlFor="email" className="text-sm font-medium text-gray-700">
-                Email Address
+                Email
               </Label>
               <Input
                 id="email"
@@ -212,30 +198,29 @@ export default function StudentProfilePage() {
               <Input
                 id="phone"
                 value={formData.phone}
-                onChange={e => handleInputChange('phone', e.target.value)}
+                onChange={e => handleFormChange('phone', e.target.value)}
                 className="mt-2"
               />
             </div>
             <div>
-              <Label htmlFor="dateOfBirth" className="text-sm font-medium text-gray-700">
-                Date of Birth
+              <Label htmlFor="room" className="text-sm font-medium text-gray-700">
+                Office Room
               </Label>
               <Input
-                id="dateOfBirth"
-                type="date"
-                value={formData.dateOfBirth}
-                onChange={e => handleInputChange('dateOfBirth', e.target.value)}
+                id="room"
+                value={formData.room}
+                onChange={e => handleFormChange('room', e.target.value)}
                 className="mt-2"
               />
             </div>
             <div>
-              <Label htmlFor="address" className="text-sm font-medium text-gray-700">
-                Address
+              <Label htmlFor="officeHours" className="text-sm font-medium text-gray-700">
+                Office Hours
               </Label>
               <Input
-                id="address"
-                value={formData.address}
-                onChange={e => handleInputChange('address', e.target.value)}
+                id="officeHours"
+                value={formData.officeHours}
+                onChange={e => handleFormChange('officeHours', e.target.value)}
                 className="mt-2"
               />
             </div>
@@ -361,4 +346,3 @@ export default function StudentProfilePage() {
     </div>
   )
 }
-

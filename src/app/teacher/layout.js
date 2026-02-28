@@ -11,6 +11,8 @@ import {
   FileText,
   Calendar,
   File,
+  User,
+  Settings,
 } from 'lucide-react'
 
 export default function TeacherLayout({ children }) {
@@ -49,6 +51,16 @@ export default function TeacherLayout({ children }) {
       label: 'Documents',
       href: '/teacher/documents',
       icon: <BookOpen size={20} />,
+    },
+    {
+      label: 'Profile',
+      href: '/teacher/profile',
+      icon: <User size={20} />,
+    },
+    {
+      label: 'Profile Settings',
+      href: '/teacher/profile-settings',
+      icon: <Settings size={20} />,
     },
   ]
 

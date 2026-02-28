@@ -1,23 +1,24 @@
 'use client'
 
+import React, { useState } from 'react'
+import { PageHeader } from '@/components/page-header'
 import { Card } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
-import { useState } from 'react'
 import { Avatar, AvatarImage, AvatarFallback } from '@/components/ui/avatar'
-import { PageHeader } from '@/components/page-header'
+import { Badge } from '@/components/ui/badge'
 import { AlertCircle, CheckCircle2, Eye, EyeOff } from 'lucide-react'
 
-export default function StudentProfilePage() {
-  // Initial student data
+export default function AdminProfileSettingsPage() {
+  // Initial admin data
   const initialFormData = {
-    firstName: 'Maria',
-    lastName: 'Santos',
-    email: 'maria.santos@school.edu',
-    phone: '+63 912 345 6789',
-    dateOfBirth: '2009-05-15',
-    address: '123 Main St, Metro Manila, PH',
+    firstName: 'John',
+    lastName: 'Administrator',
+    email: 'john.admin@snhs.edu.ph',
+    phone: '(555) 987-6543',
+    role: 'Super Admin',
+    department: 'Administration',
   }
 
   const [formData, setFormData] = useState(initialFormData)
@@ -45,7 +46,7 @@ export default function StudentProfilePage() {
     passwordData.confirmPassword
 
   // Handle form input change
-  const handleInputChange = (field, value) => {
+  const handleFormChange = (field, value) => {
     setFormData(prev => ({ ...prev, [field]: value }))
   }
 
@@ -63,6 +64,7 @@ export default function StudentProfilePage() {
   const handleSaveChanges = async () => {
     setIsSaving(true)
     try {
+      // Simulate API call
       await new Promise(resolve => setTimeout(resolve, 1000))
       setMessage({
         type: 'success',
@@ -91,7 +93,7 @@ export default function StudentProfilePage() {
       return
     }
 
-    // Validate password strength (at least 8 characters)
+    // Validate password strength
     if (passwordData.newPassword.length < 8) {
       setMessage({
         type: 'error',
@@ -103,6 +105,7 @@ export default function StudentProfilePage() {
 
     setIsChangingPassword(true)
     try {
+      // Simulate API call
       await new Promise(resolve => setTimeout(resolve, 1000))
       setPasswordData({
         currentPassword: '',
@@ -128,7 +131,7 @@ export default function StudentProfilePage() {
     <div className="space-y-6">
       <PageHeader
         title="Profile Settings"
-        description="Manage your personal information and password"
+        description="Manage your admin profile and password"
       />
 
       {/* Messages */}
@@ -149,19 +152,23 @@ export default function StudentProfilePage() {
         </div>
       )}
 
-      {/* Profile Picture Section */}
-      <Card className="p-6 bg-gradient-to-r from-blue-50 to-purple-50 border-blue-200">
-        <h3 className="font-semibold text-foreground mb-4">Profile Picture</h3>
-        <div className="flex items-center gap-6">
-          <Avatar className="w-24 h-24">
-            <AvatarImage src="https://avatar.vercel.sh/student" alt={`${formData.firstName} ${formData.lastName}`} />
+      {/* Profile Header Card */}
+      <Card className="p-8 bg-gradient-to-r from-blue-50 to-purple-50 border-blue-200">
+        <div className="flex flex-col md:flex-row gap-6 items-start md:items-center">
+          <Avatar className="h-24 w-24">
+            <AvatarImage src="https://avatar.vercel.sh/admin" alt={`${formData.firstName} ${formData.lastName}`} />
             <AvatarFallback className="bg-blue-600 text-white text-2xl">
               {formData.firstName[0]}{formData.lastName[0]}
             </AvatarFallback>
           </Avatar>
-          <Button variant="outline" className="border-blue-300 text-blue-600 hover:bg-blue-50">
-            Upload New Picture
-          </Button>
+          <div className="flex-1">
+            <h1 className="text-3xl font-bold text-gray-900">{formData.firstName} {formData.lastName}</h1>
+            <p className="text-lg text-gray-600 mt-1">Administrator</p>
+            <div className="flex flex-wrap gap-2 mt-3">
+              <Badge variant="default" className="bg-blue-600">{formData.role}</Badge>
+              <Badge variant="outline">{formData.department}</Badge>
+            </div>
+          </div>
         </div>
       </Card>
 
@@ -177,7 +184,7 @@ export default function StudentProfilePage() {
               <Input
                 id="firstName"
                 value={formData.firstName}
-                onChange={e => handleInputChange('firstName', e.target.value)}
+                onChange={e => handleFormChange('firstName', e.target.value)}
                 className="mt-2"
               />
             </div>
@@ -188,13 +195,13 @@ export default function StudentProfilePage() {
               <Input
                 id="lastName"
                 value={formData.lastName}
-                onChange={e => handleInputChange('lastName', e.target.value)}
+                onChange={e => handleFormChange('lastName', e.target.value)}
                 className="mt-2"
               />
             </div>
             <div>
               <Label htmlFor="email" className="text-sm font-medium text-gray-700">
-                Email Address
+                Email
               </Label>
               <Input
                 id="email"
@@ -212,30 +219,30 @@ export default function StudentProfilePage() {
               <Input
                 id="phone"
                 value={formData.phone}
-                onChange={e => handleInputChange('phone', e.target.value)}
+                onChange={e => handleFormChange('phone', e.target.value)}
                 className="mt-2"
               />
             </div>
             <div>
-              <Label htmlFor="dateOfBirth" className="text-sm font-medium text-gray-700">
-                Date of Birth
+              <Label htmlFor="role" className="text-sm font-medium text-gray-700">
+                Role
               </Label>
               <Input
-                id="dateOfBirth"
-                type="date"
-                value={formData.dateOfBirth}
-                onChange={e => handleInputChange('dateOfBirth', e.target.value)}
-                className="mt-2"
+                id="role"
+                value={formData.role}
+                readOnly
+                className="mt-2 bg-gray-100 cursor-not-allowed"
               />
+              <p className="text-xs text-gray-500 mt-1">Role cannot be changed</p>
             </div>
             <div>
-              <Label htmlFor="address" className="text-sm font-medium text-gray-700">
-                Address
+              <Label htmlFor="department" className="text-sm font-medium text-gray-700">
+                Department
               </Label>
               <Input
-                id="address"
-                value={formData.address}
-                onChange={e => handleInputChange('address', e.target.value)}
+                id="department"
+                value={formData.department}
+                onChange={e => handleFormChange('department', e.target.value)}
                 className="mt-2"
               />
             </div>
@@ -361,4 +368,3 @@ export default function StudentProfilePage() {
     </div>
   )
 }
-
